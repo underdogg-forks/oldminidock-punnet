@@ -1,4 +1,4 @@
-ARG PHP_VERSION=7.2-fpm
+ARG PHP_VERSION=7.1-fpm
 FROM php:${PHP_VERSION}
 
 LABEL maintainer="Abdelrahman Omran <me@omranic.com>"
@@ -40,4 +40,4 @@ RUN apt-get clean && rm -rf /tmp/pear && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm /var/log/lastlog /var/log/faillog
 
-WORKDIR /var/www
+WORKDIR /var/www/projects
