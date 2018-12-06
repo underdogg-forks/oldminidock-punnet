@@ -78,4 +78,4 @@ RUN apt-get clean && rm -rf /tmp/pear && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm /var/log/lastlog /var/log/faillog
 
-WORKDIR /var/www
+WORKDIR /var/www/projects
