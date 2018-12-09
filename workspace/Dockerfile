@@ -53,18 +53,29 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && printf "\nPATH=\"$COMPOSER_DIR/vendor/bin:\$PATH\"\n" | tee -a /root/.bashrc \
     && composer global install
 
+###########################################################################
 # Node / NVM:
-ARG NODE_VERSION=stable
+###########################################################################
+# Check if NVM needs to be installed
+ARG NODE_VERSION=node
 ENV NODE_VERSION ${NODE_VERSION}
 ENV NVM_DIR /root/.nvm
 
-RUN mkdir -p $NVM_DIR \
-    && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
-    && . $NVM_DIR/nvm.sh \
-    && nvm install ${NODE_VERSION} \
-    && nvm use ${NODE_VERSION} \
-    && nvm alias ${NODE_VERSION}
+# Install nvm (A Node Version Manager)
+RUN mkdir -p $NVM_DIR && \
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
+        && . $NVM_DIR/nvm.sh \
+        && nvm install ${NODE_VERSION} \
+        && nvm use ${NODE_VERSION} \
+        && nvm alias ${NODE_VERSION} \
+        npm install -g gulp \
+        npm install -g bower \
+        npm install -g @vue/cli \
+        && ln -s `npm bin --global` /root/.node-bin
 
+#RUN apt-get install -y gnupg2 && apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_8.x | bash && apt-get install -y nodejs && curl -L https://npmjs.com/install.sh | sh
+		
+		
 # Wouldn't execute when added to the RUN statement in the above block
 # Source NVM when loading bash since /root/.profile isn't loaded on non-login shell
 RUN echo "" >> /root/.bashrc \
