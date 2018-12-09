@@ -1,5 +1,4 @@
-ARG NGINX_VERSION=1.15
-FROM nginx:${NGINX_VERSION}
+FROM nginx:alpine
 
 LABEL maintainer="Abdelrahman Omran <me@omranic.com>"
 
@@ -12,7 +11,10 @@ RUN apk update \
     && adduser -D -H -u 1000 -s /bin/bash www-data
 
 # Install nano
-RUN apt-get update && apt-get install -y --no-install-recommends nano && rm -rf /var/lib/apt/lists/*
+RUN apk add --update nano && rm -rf /var/lib/apt/lists/*
+
+
+#RUN apk-get update && apk-get install -y --no-install-recommends nano && rm -rf /var/lib/apt/lists/*
 
 ARG PHP_UPSTREAM_CONTAINER=php-fpm
 ARG PHP_UPSTREAM_PORT=9000
@@ -23,3 +25,7 @@ RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREA
     && rm /etc/nginx/conf.d/default.conf
 
 WORKDIR /var/www/projects
+
+CMD ["nginx"]
+
+EXPOSE 80 443
