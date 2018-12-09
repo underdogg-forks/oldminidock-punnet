@@ -74,7 +74,8 @@ RUN mkdir -p $NVM_DIR && \
         && ln -s `npm bin --global` /root/.node-bin
 
 #RUN apt-get install -y gnupg2 && apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_8.x | bash && apt-get install -y nodejs && curl -L https://npmjs.com/install.sh | sh
-		
+#RUN curl -o- -L https://yarnpkg.com/install.sh |
+#curl -o- -L https://yarnpkg.com/install.sh
 		
 # Wouldn't execute when added to the RUN statement in the above block
 # Source NVM when loading bash since /root/.profile isn't loaded on non-login shell
